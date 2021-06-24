@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/24 18:03:43 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/24 18:16:20 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_args
 	int number_of_times_each_philosopher_must_eat;
 	pthread_t *philosophers;
 	pthread_mutex_t *forks;
+	pthread_mutex_t for_write;
 	struct timeval start_time;
 } t_args;
 

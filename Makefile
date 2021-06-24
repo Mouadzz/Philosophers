@@ -6,7 +6,7 @@
 #    By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/23 12:33:21 by mlasrite          #+#    #+#              #
-#    Updated: 2021/06/24 18:05:17 by mlasrite         ###   ########.fr        #
+#    Updated: 2021/06/24 18:17:09 by mlasrite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME = philo
 all : $(NAME)
 
 $(NAME) : $(SRC)
-	gcc  $(SRC) -o $(NAME)
+	gcc $(FLAGE) $(SRC) -o $(NAME)
 
 clean :
 	rm -rf $(NAME)

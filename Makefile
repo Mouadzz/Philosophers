@@ -6,20 +6,20 @@
 #    By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/23 12:33:21 by mlasrite          #+#    #+#              #
-#    Updated: 2021/06/23 13:23:26 by mlasrite         ###   ########.fr        #
+#    Updated: 2021/06/24 18:05:17 by mlasrite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c utils.c
+SRC = main.c utils.c simulation.c
 
-FLAGE= -Wall -Wextra -Werror
+FLAGE= -Wall -Wextra -Werror 
 
 NAME = philo
 
 all : $(NAME)
 
 $(NAME) : $(SRC)
-	gcc $(FLAGE) $(SRC) -o $(NAME)
+	gcc  $(SRC) -o $(NAME)
 
 clean :
 	rm -rf $(NAME)

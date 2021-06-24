@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 12:32:18 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/24 10:20:52 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/24 16:12:47 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,32 @@ int error_handling(int argc, char **argv)
     return (0);
 }
 
-void parse_args(int argc, char **argv, t_args *head)
+void parse_args(int argc, char **argv, t_args *args)
 {
-    head->number_of_philosophers = ft_atoi(argv[1]);
-    head->time_to_die = ft_atoi(argv[2]);
-    head->time_to_eat = ft_atoi(argv[3]);
-    head->time_to_sleep = ft_atoi(argv[4]);
+    args->number_of_philosophers = ft_atoi(argv[1]);
+    args->time_to_die = ft_atoi(argv[2]);
+    args->time_to_eat = ft_atoi(argv[3]);
+    args->time_to_sleep = ft_atoi(argv[4]);
     if (argc == 6)
-        head->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+        args->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 }
 
-void initialize_struct(t_args *head)
+void initialize_struct(t_args *args)
 {
-    head->number_of_philosophers = 0;
-    head->number_of_times_each_philosopher_must_eat = 0;
-    head->time_to_die = 0;
-    head->time_to_eat = 0;
-    head->time_to_sleep = 0;
+    args->number_of_philosophers = 0;
+    args->number_of_times_each_philosopher_must_eat = 0;
+    args->time_to_die = 0;
+    args->time_to_eat = 0;
+    args->time_to_sleep = 0;
 }
 
 int main(int argc, char **argv)
 {
     int ret;
-    t_args *head;
+    t_args *args;
 
     ret = 0;
-    head = (t_args *)malloc(sizeof(t_args));
+    args = (t_args *)malloc(sizeof(t_args));
     if (argc == 5 || argc == 6)
     {
         ret = error_handling(argc, argv);
@@ -62,9 +62,14 @@ int main(int argc, char **argv)
         }
         else
         {
-            initialize_struct(head);
-            parse_args(argc, argv, head);
-            print_struct(head);
+            initialize_struct(args);
+            parse_args(argc, argv, args);
+            ret = simulation(args);     
+            if (ret == 1)
+            {
+                write(2, "Error !!\n", 9);
+                return (1);
+            }
         }
     }
     else

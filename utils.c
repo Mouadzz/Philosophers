@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:20 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/24 10:20:30 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/24 17:42:30 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,66 @@ int ft_atoi(char *str)
 
 void print_struct(t_args *head)
 {
-    printf("%d\n", head->number_of_philosophers);
-    printf("%d\n", head->time_to_die);
-    printf("%d\n", head->time_to_eat);
-    printf("%d\n", head->time_to_sleep);
-    printf("%d\n", head->number_of_times_each_philosopher_must_eat);
+	printf("%d\n", head->number_of_philosophers);
+	printf("%d\n", head->time_to_die);
+	printf("%d\n", head->time_to_eat);
+	printf("%d\n", head->time_to_sleep);
+	printf("%d\n", head->number_of_times_each_philosopher_must_eat);
+}
+
+int ft_check(int n)
+{
+	int i;
+	unsigned int res;
+
+	i = 1;
+	res = n;
+	if (n < 0)
+	{
+		i++;
+		res *= -1;
+	}
+	while (res > 9)
+	{
+		res = res / 10;
+		i++;
+	}
+	return (i);
+}
+
+char *ft_itoa(int n)
+{
+	int i;
+	unsigned char *str;
+	unsigned int res;
+
+	res = n;
+	i = ft_check(n);
+	str = (unsigned char *)malloc(sizeof(char) * i + 1);
+	if (!str)
+		return (NULL);
+	if (n < 0)
+	{
+		str[0] = '-';
+		res = -1;
+	}
+	str[i] = '\0';
+	while (--i && res >= 10)
+	{
+		str[i] = (res % 10) + 48;
+		res = res / 10;
+	}
+	if (res < 10)
+		str[i] = res % 10 + 48;
+	return ((char *)str);
+}
+
+int ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i += 1;
+	return i;
 }

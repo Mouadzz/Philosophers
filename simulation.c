@@ -6,13 +6,13 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:35:28 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 11:23:42 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 12:58:56 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void write_status(int id, char *str, t_philo *philo)
+void write_status(int id, char *str, t_philo *philo, int isalive)
 {
 	struct timeval current_time;
 	int time_ms;
@@ -30,7 +30,8 @@ void write_status(int id, char *str, t_philo *philo)
 	write(1, " ", 1);
 	write(1, str, ft_strlen(str));
 	write(1, "\n", 1);
-	pthread_mutex_unlock(&philo->args->for_write);
+	if (isalive == 0)
+		pthread_mutex_unlock(&philo->args->for_write);
 }
 
 void *supervisord(void *arg)
@@ -39,12 +40,10 @@ void *supervisord(void *arg)
 	struct timeval current_time;
 	int current_ms;
 	int time_ms;
-	int i;
-
-	i = 0;
 
 	while (1)
 	{
+		pthread_mutex_lock(&philo->eating);
 		gettimeofday(&current_time, NULL);
 		current_ms = time_to_ms(current_time);
 		time_ms = current_ms - philo->start_time_ms;
@@ -55,6 +54,7 @@ void *supervisord(void *arg)
 			pthread_mutex_unlock(&philo->args->exit);
 			break;
 		}
+		pthread_mutex_unlock(&philo->eating);
 		usleep(1000);
 	}
 	return 0;
@@ -70,17 +70,20 @@ void *routine(void *arg)
 	while (philo->args->isalive != 1)
 	{
 		pthread_mutex_lock(&philo->args->forks[philo->id]);
+		write_status(philo->id, "has taken a fork", philo, 0);
 		pthread_mutex_lock(&philo->args->forks[(philo->id + 1) % philo->args->number_of_philosophers]);
-		write_status(philo->id, "has taken a fork", philo);
-		write_status(philo->id, "is eating", philo);
+		write_status(philo->id, "has taken a fork", philo, 0);
+		pthread_mutex_lock(&philo->eating);
+		write_status(philo->id, "is eating", philo, 0);
 		gettimeofday(&start_time_each, NULL);
 		philo->start_time_ms = time_to_ms(start_time_each);
 		usleep(philo->args->time_to_eat * 1000);
+		pthread_mutex_unlock(&philo->eating);
 		pthread_mutex_unlock(&philo->args->forks[philo->id]);
 		pthread_mutex_unlock(&philo->args->forks[(philo->id + 1) % philo->args->number_of_philosophers]);
-		write_status(philo->id, "is sleeping", philo);
+		write_status(philo->id, "is sleeping", philo, 0);
 		usleep(philo->args->time_to_sleep * 1000);
-		write_status(philo->id, "is thinking", philo);
+		write_status(philo->id, "is thinking", philo, 0);
 		philo->counter += 1;
 	}
 	return 0;
@@ -112,18 +115,19 @@ int simulation(t_args *args)
 		philo[i]->counter = 0;
 		philo[i]->id = i;
 		philo[i]->args = args;
+		pthread_mutex_init(&philo[i]->eating, NULL);
 		gettimeofday(&start_time_each, NULL);
 		philo[i]->start_time_ms = time_to_ms(start_time_each);
 		pthread_create(&args->philosophers[i], NULL, (void *)routine, philo[i]);
 		i += 1;
 	}
-
 	pthread_mutex_lock(&args->exit);
-	// write_status(args->who_died, "died", philo[args->who_died]);
-	write(1,"died\n", 5);
+
+	write_status(args->who_died, "died", philo[args->who_died], 1);
 
 	i = 0;
 	while (i < args->number_of_philosophers)
 		pthread_mutex_destroy(&args->forks[i++]);
+
 	return (0);
 }

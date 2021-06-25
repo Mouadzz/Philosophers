@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 11:11:46 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 12:52:33 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philo
 	int id;
 	int	start_time_ms;
 	t_args *args;
+	pthread_mutex_t eating;
 } t_philo;
 
 int ft_isdigit(char *str);

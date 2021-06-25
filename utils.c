@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:20 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 10:31:34 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:00:03 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,6 @@ int ft_atoi(char *str)
 		i++;
 	}
 	return (res * sign);
-}
-
-void print_struct(t_args *head)
-{
-	printf("%d\n", head->number_of_philosophers);
-	printf("%d\n", head->time_to_die);
-	printf("%d\n", head->time_to_eat);
-	printf("%d\n", head->time_to_sleep);
-	printf("%d\n", head->number_of_times_each_philosopher_must_eat);
 }
 
 int ft_check(int n)
@@ -119,12 +110,4 @@ int ft_strlen(char *str)
 	while (str[i])
 		i += 1;
 	return i;
-}
-
-int time_to_ms(struct timeval current_time)
-{
-	int current_ms;
-
-	current_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	return current_ms;
 }

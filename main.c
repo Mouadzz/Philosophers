@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 12:32:18 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/24 16:12:47 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:04:14 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void initialize_struct(t_args *args)
     args->time_to_die = 0;
     args->time_to_eat = 0;
     args->time_to_sleep = 0;
+    args->isalive = 0;
+    args->who_died = 0;
 }
 
 int main(int argc, char **argv)
@@ -51,7 +53,6 @@ int main(int argc, char **argv)
     t_args *args;
 
     ret = 0;
-    args = (t_args *)malloc(sizeof(t_args));
     if (argc == 5 || argc == 6)
     {
         ret = error_handling(argc, argv);
@@ -62,14 +63,10 @@ int main(int argc, char **argv)
         }
         else
         {
+            args = malloc(sizeof(t_args));
             initialize_struct(args);
             parse_args(argc, argv, args);
-            ret = simulation(args);     
-            if (ret == 1)
-            {
-                write(2, "Error !!\n", 9);
-                return (1);
-            }
+            simulation(args);
         }
     }
     else

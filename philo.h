@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 12:52:33 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:13:19 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,25 @@ typedef struct s_philo
 } t_philo;
 
 int ft_isdigit(char *str);
-void print_struct(t_args *head);
 int ft_atoi(char *str);
-int simulation(t_args *args);
-void *routine(void *arg);
 char *ft_itoa(int n);
 int ft_check(int n);
 int ft_strlen(char *str);
-void *supervisord(void *arg);
+
+void write_status(int id, char *str, t_philo *philo, int isalive);
 int time_to_ms(struct timeval current_time);
+
+void simulation(t_args *args);
+
+void *supervisord(void *arg);
+void *routine(void *arg);
+
+void free_philo(t_philo **philo);
+void free_args(t_args *args);
+
+// segfault
+// arg 5
+// timer
+// norm
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/24 18:16:20 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 11:11:46 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ typedef struct s_args
 	pthread_mutex_t *forks;
 	pthread_mutex_t for_write;
 	struct timeval start_time;
+	pthread_mutex_t exit;
+	int isalive;
+	int who_died;
 } t_args;
 
 typedef struct s_philo
 {
-	int isalive;
 	int counter;
 	int id;
+	int	start_time_ms;
 	t_args *args;
 } t_philo;
 
@@ -47,5 +50,7 @@ void *routine(void *arg);
 char *ft_itoa(int n);
 int ft_check(int n);
 int ft_strlen(char *str);
+void *supervisord(void *arg);
+int time_to_ms(struct timeval current_time);
 
 #endif

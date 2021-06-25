@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:20 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/24 17:42:30 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 10:31:34 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,12 @@ int ft_strlen(char *str)
 	while (str[i])
 		i += 1;
 	return i;
+}
+
+int time_to_ms(struct timeval current_time)
+{
+	int current_ms;
+
+	current_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	return current_ms;
 }

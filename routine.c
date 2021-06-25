@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 13:03:59 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 14:11:30 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:56:14 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void *routine(void *arg)
 	while (philo->args->isalive != 1)
 	{
 		pthread_mutex_lock(&philo->args->forks[philo->id]);
-		pthread_mutex_lock(&philo->args->forks[(philo->id + 1) % philo->args->number_of_philosophers]);
 		write_status(philo->id, "has taken a fork", philo, 0);
+		pthread_mutex_lock(&philo->args->forks[(philo->id + 1) % philo->args->number_of_philosophers]);
 		write_status(philo->id, "has taken a fork", philo, 0);
 		pthread_mutex_lock(&philo->eating);
 		write_status(philo->id, "is eating", philo, 0);

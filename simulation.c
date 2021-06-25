@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:35:28 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 14:01:33 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/25 15:00:12 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,21 @@ void simulation_2(t_args *args, t_philo **philo)
 		gettimeofday(&start_time_each, NULL);
 		philo[i]->start_time_ms = time_to_ms(start_time_each);
 		pthread_create(&args->philosophers[i], NULL, (void *)routine, philo[i]);
-		i += 1;
+		i += 2;
+	}
+	usleep(1000);
+	i = 1;
+	while (i < args->number_of_philosophers)
+	{
+		philo[i] = malloc(sizeof(t_philo));
+		philo[i]->counter = 0;
+		philo[i]->id = i;
+		philo[i]->args = args;
+		pthread_mutex_init(&philo[i]->eating, NULL);
+		gettimeofday(&start_time_each, NULL);
+		philo[i]->start_time_ms = time_to_ms(start_time_each);
+		pthread_create(&args->philosophers[i], NULL, (void *)routine, philo[i]);
+		i += 2;
 	}
 	pthread_mutex_lock(&args->exit);
 }

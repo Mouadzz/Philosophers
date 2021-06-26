@@ -6,19 +6,19 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 13:05:45 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 14:07:25 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/26 12:55:43 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void write_status(int id, char *str, t_philo *philo, int isalive)
+void	write_status(int id, char *str, t_philo *philo, int isalive)
 {
-	struct timeval current_time;
-	int time_ms;
-	int current_ms;
-	int start_ms;
-	char *tmp;
+	struct timeval	current_time;
+	int				time_ms;
+	int				current_ms;
+	int				start_ms;
+	char			*tmp;
 
 	gettimeofday(&current_time, NULL);
 	current_ms = time_to_ms(current_time);
@@ -41,10 +41,10 @@ void write_status(int id, char *str, t_philo *philo, int isalive)
 		pthread_mutex_unlock(&philo->args->for_write);
 }
 
-int time_to_ms(struct timeval current_time)
+int	time_to_ms(struct timeval current_time)
 {
-	int current_ms;
+	int	current_ms;
 
 	current_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	return current_ms;
+	return (current_ms);
 }

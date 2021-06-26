@@ -6,15 +6,15 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:20 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/25 14:00:03 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/26 12:51:38 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_isdigit(char *str)
+int	ft_isdigit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -26,11 +26,11 @@ int ft_isdigit(char *str)
 	return (0);
 }
 
-int ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
-	int i;
-	int sign;
-	long res;
+	long	res;
+	int		i;
+	int		sign;
 
 	i = 0;
 	res = 0;
@@ -55,10 +55,10 @@ int ft_atoi(char *str)
 	return (res * sign);
 }
 
-int ft_check(int n)
+int	ft_check(int n)
 {
-	int i;
-	unsigned int res;
+	int				i;
+	unsigned int	res;
 
 	i = 1;
 	res = n;
@@ -75,11 +75,11 @@ int ft_check(int n)
 	return (i);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	int i;
-	unsigned char *str;
-	unsigned int res;
+	int				i;
+	unsigned char	*str;
+	unsigned int	res;
 
 	res = n;
 	i = ft_check(n);
@@ -102,12 +102,12 @@ char *ft_itoa(int n)
 	return ((char *)str);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 		i += 1;
-	return i;
+	return (i);
 }

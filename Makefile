@@ -6,11 +6,11 @@
 #    By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/23 12:33:21 by mlasrite          #+#    #+#              #
-#    Updated: 2021/06/25 14:00:51 by mlasrite         ###   ########.fr        #
+#    Updated: 2021/06/26 12:46:52 by mlasrite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c utils.c simulation.c status.c supervisord.c routine.c free.c
+SRC = main.c utils.c simulation.c status.c supervisord.c routine.c free.c sleep.c
 
 FLAGE= -Wall -Wextra -Werror 
 

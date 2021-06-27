@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/26 13:22:28 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/27 10:33:36 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int		time_to_ms(struct timeval current_time);
 void	simulation(t_args *args);
 
 void	*supervisord(void *arg);
+void	*supervisord_eat(void *arg);
+
 void	*routine(void *arg);
 
 void	free_philo(t_philo **philo);

@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 10:56:06 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/26 12:56:23 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/27 12:23:22 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	my_sleep(long time)
 
 	gettimeofday(&start_time, NULL);
 	start = time_to_ms(start_time);
-	usleep(time - 20000);
+	if (time >= 60000)
+		usleep(time - 30000);
+	else
+		usleep(time);
 	while (1)
 	{
 		gettimeofday(&current_time, NULL);

@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 13:05:45 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/27 10:53:35 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/28 16:26:26 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	write_status(int id, char *str, t_philo *philo, int isalive)
 	current_ms = time_to_ms(current_time);
 	start_ms = time_to_ms(philo->args->start_time);
 	time_ms = current_ms - start_ms;
-	pthread_mutex_lock(&philo->args->for_write);
+	sem_wait(philo->args->for_write);
 	tmp = ft_itoa(time_ms);
 	write(1, tmp, ft_strlen(tmp));
 	free(tmp);
 	tmp = NULL;
 	write(1, " ", 1);
-	tmp = ft_itoa(id);
+	tmp = ft_itoa(id + 1);
 	write(1, tmp, ft_strlen(tmp));
 	free(tmp);
 	tmp = NULL;
@@ -38,7 +38,7 @@ void	write_status(int id, char *str, t_philo *philo, int isalive)
 	write(1, str, ft_strlen(str));
 	write(1, "\n", 1);
 	if (isalive == 0)
-		pthread_mutex_unlock(&philo->args->for_write);
+		sem_post(philo->args->for_write);
 }
 
 int	time_to_ms(struct timeval current_time)

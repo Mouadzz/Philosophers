@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/28 13:13:10 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/28 16:24:40 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
-#include <semaphore.h>
+# include <semaphore.h>
+# include <signal.h>
 
 typedef struct s_args
 {
@@ -28,15 +29,17 @@ typedef struct s_args
 	int				number_of_times_each_philosopher_must_eat;
 	struct timeval	start_time;
 	sem_t			*exit;
+	sem_t			*for_write;
 	sem_t			*forks;
 	int				isalive;
 	int				iseating;
-	int				who_died;
+	pid_t			*all_pid;
 }	t_args;
 
 typedef struct s_philo
 {
 	int				counter;
+	int				count_forks;
 	int				id;
 	int				start_time_ms;
 	t_args			*args;

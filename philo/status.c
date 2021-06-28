@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 13:05:45 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/27 10:53:35 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/28 16:26:38 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	write_status(int id, char *str, t_philo *philo, int isalive)
 	free(tmp);
 	tmp = NULL;
 	write(1, " ", 1);
-	tmp = ft_itoa(id);
+	tmp = ft_itoa(id + 1);
 	write(1, tmp, ft_strlen(tmp));
 	free(tmp);
 	tmp = NULL;

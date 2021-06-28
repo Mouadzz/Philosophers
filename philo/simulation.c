@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:35:28 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/27 12:18:08 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/28 10:38:56 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,22 @@ void	simulation_2(t_args *args, t_philo **philo)
 	pthread_mutex_lock(&args->exit);
 }
 
+void	destroy_mutex(t_args *args, t_philo	**philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < args->number_of_philosophers)
+		pthread_mutex_destroy(&args->forks[i++]);
+	i = 0;
+	while (i < args->number_of_philosophers)
+		pthread_mutex_destroy(&philo[i++]->eating);
+	pthread_mutex_destroy(&args->exit);
+	pthread_mutex_destroy(&args->for_write);
+}
+
 void	simulation(t_args *args)
 {
-	int		i;
 	t_philo	**philo;
 
 	philo = malloc(sizeof(t_philo *) * args->number_of_philosophers);
@@ -90,14 +103,7 @@ void	simulation(t_args *args)
 		pthread_mutex_lock(&args->for_write);
 		write(1, "All philosophers have eaten !!\n", 31);
 	}
-	i = 0;
-	while (i < args->number_of_philosophers)
-		pthread_mutex_destroy(&args->forks[i++]);
-	i = 0;
-	while (i < args->number_of_philosophers)
-		pthread_mutex_destroy(&philo[i++]->eating);
-	pthread_mutex_destroy(&args->exit);
-	pthread_mutex_destroy(&args->for_write);
+	destroy_mutex(args, philo);
 	free_philo(philo);
 	free_args(args);
 }

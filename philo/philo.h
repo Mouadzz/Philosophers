@@ -6,12 +6,12 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/27 10:33:36 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/28 10:45:45 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PHILO_H
-#define	PHILO_H
+#ifndef PHILO_H
+# define PHILO_H
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -33,39 +33,30 @@ typedef struct s_args
 	int				isalive;
 	int				iseating;
 	int				who_died;
-}					t_args;
+}	t_args;
 
-typedef	struct		s_philo
+typedef struct s_philo
 {
 	int				counter;
 	int				id;
 	int				start_time_ms;
 	t_args			*args;
 	pthread_mutex_t	eating;
-}					t_philo;
+}	t_philo;
 
 int		ft_isdigit(char *str);
 int		ft_atoi(char *str);
 char	*ft_itoa(int n);
 int		ft_check(int n);
 int		ft_strlen(char *str);
-
 void	write_status(int id, char *str, t_philo *philo, int isalive);
 int		time_to_ms(struct timeval current_time);
-
 void	simulation(t_args *args);
-
 void	*supervisord(void *arg);
 void	*supervisord_eat(void *arg);
-
 void	*routine(void *arg);
-
 void	free_philo(t_philo **philo);
 void	free_args(t_args *args);
-
 void	my_sleep(long time);
-
-// arg 5
-// norm
 
 #endif

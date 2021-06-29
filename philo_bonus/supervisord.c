@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 13:03:12 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/28 16:24:40 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:55:32 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ void *supervisord(void *arg)
 		time_ms = current_ms - philo->start_time_ms;
 		if (time_ms > philo->args->time_to_die)
 		{
-			philo->args->isalive = 1;
 			write_status(philo->id, "died", philo, 1);
 			while (philo->count_forks > 0)
 			{
 				sem_post(philo->args->forks);
 				philo->count_forks -= 1;
 			}
-			sem_post(philo->args->exit);
-			exit(1);
+			exit(0);
 		}
 		sem_post(philo->eating);
+		my_sleep(500);
 	}
 	return (0);
 }

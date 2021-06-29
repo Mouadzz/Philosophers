@@ -6,11 +6,27 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:35:28 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/28 16:24:42 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:52:42 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void free_philo(t_philo **philo)
+{
+	int i;
+	int max;
+
+	max = philo[0]->args->number_of_philosophers;
+	i = 0;
+	while (i < max)
+	{
+		philo[i]->args = NULL;
+		free(philo[i]);
+		i += 1;
+	}
+	free(philo);
+}
 
 void even(t_args *args, t_philo **philo)
 {
@@ -56,13 +72,13 @@ void simulation(t_args *args)
 {
 	t_philo **philo;
 	int i;
+	int status;
 
 	philo = malloc(sizeof(t_philo *) * args->number_of_philosophers);
 	args->all_pid = malloc(sizeof(pid_t) * args->number_of_philosophers);
+	status = 0;
 
 	gettimeofday(&args->start_time, NULL);
-	sem_unlink("philo_bonus_exit");
-	args->exit = sem_open("philo_bonus_exit", O_CREAT, 0777, 0);
 
 	sem_unlink("philo_bonus_for_write");
 	args->for_write = sem_open("philo_bonus_for_write", O_CREAT, 0777, 1);
@@ -70,10 +86,24 @@ void simulation(t_args *args)
 	sem_unlink("philo_forks_exit");
 	args->forks = sem_open("philo_forks_exit", O_CREAT, 0777, args->number_of_philosophers);
 	even(args, philo);
-	my_sleep(500);
+	my_sleep(1000);
 	odd(args, philo);
-	sem_wait(args->exit);
+	i = 0;
+	while (i < args->number_of_philosophers)
+	{
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == 0)
+			break;
+		i += 1;
+	}
+	if (WEXITSTATUS(status) != 0)
+	{
+		sem_wait(args->for_write);
+		write(1, "All philosophers have eaten !!\n", 31);
+	}
 	i = 0;
 	while (i < args->number_of_philosophers)
 		kill(args->all_pid[i++], SIGKILL);
+	free_philo(philo);
+	free(args);
 }

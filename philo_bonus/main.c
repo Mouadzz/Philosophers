@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 12:32:18 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/28 16:24:41 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:40:43 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	initialize_struct(t_args *args)
 	args->time_to_die = 0;
 	args->time_to_eat = 0;
 	args->time_to_sleep = 0;
-	args->isalive = 0;
-	args->iseating = 0;
+	args->who_died = 0;
 }
 
 int	main(int argc, char **argv)

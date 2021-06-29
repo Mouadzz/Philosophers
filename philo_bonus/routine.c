@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 12:31:07 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/28 16:24:39 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:42:19 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void routine(t_philo *philo)
 	name = generate_sem_name(philo);
 	sem_unlink(name);
 	philo->eating = sem_open(name, O_CREAT, 0777, 1);
-	// free(name);
+	free(name);
 	gettimeofday(&start_time_each, NULL);
 	philo->start_time_ms = time_to_ms(start_time_each);
 	pthread_create(&sv, NULL, (void *)supervisord, philo);

@@ -6,7 +6,7 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:15:51 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/28 16:24:40 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:41:52 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ typedef struct s_args
 	int				time_to_sleep;
 	int				number_of_times_each_philosopher_must_eat;
 	struct timeval	start_time;
-	sem_t			*exit;
 	sem_t			*for_write;
 	sem_t			*forks;
-	int				isalive;
-	int				iseating;
 	pid_t			*all_pid;
+	int				who_died;
 }	t_args;
 
 typedef struct s_philo

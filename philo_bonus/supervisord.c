@@ -6,18 +6,18 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 13:03:12 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/29 11:55:32 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 12:46:05 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *supervisord(void *arg)
+void	*supervisord(void *arg)
 {
-	struct timeval current_time;
-	t_philo *philo;
-	int current_ms;
-	int time_ms;
+	struct timeval	current_time;
+	t_philo			*philo;
+	int				current_ms;
+	int				time_ms;
 
 	philo = (t_philo *)arg;
 	while (1)
@@ -39,5 +39,4 @@ void *supervisord(void *arg)
 		sem_post(philo->eating);
 		my_sleep(500);
 	}
-	return (0);
 }

@@ -6,19 +6,19 @@
 /*   By: mlasrite <mlasrite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 12:31:07 by mlasrite          #+#    #+#             */
-/*   Updated: 2021/06/29 11:42:19 by mlasrite         ###   ########.fr       */
+/*   Updated: 2021/06/29 12:39:16 by mlasrite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-char *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char *p;
-	int s1len;
-	int s2len;
-	int i;
-	int j;
+	char	*p;
+	int		s1len;
+	int		s2len;
+	int		i;
+	int		j;
 
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
@@ -38,10 +38,10 @@ char *ft_strjoin(char *s1, char *s2)
 	return (p);
 }
 
-char *generate_sem_name(t_philo *philo)
+char	*generate_sem_name(t_philo *philo)
 {
-	char *tmp;
-	char *name;
+	char	*tmp;
+	char	*name;
 
 	tmp = ft_itoa(philo->id);
 	name = ft_strjoin("philo_bonus_eating", tmp);
@@ -49,11 +49,34 @@ char *generate_sem_name(t_philo *philo)
 	return (name);
 }
 
-void routine(t_philo *philo)
+void	help_routine(t_philo *philo)
 {
-	struct timeval start_time_each;
-	pthread_t sv;
-	char *name;
+	struct timeval	start_time_each;
+
+	sem_wait(philo->args->forks);
+	philo->count_forks += 1;
+	write_status(philo->id, "has taken a fork", philo, 0);
+	sem_wait(philo->args->forks);
+	philo->count_forks += 1;
+	write_status(philo->id, "has taken a fork", philo, 0);
+	sem_wait(philo->eating);
+	write_status(philo->id, "is eating", philo, 0);
+	gettimeofday(&start_time_each, NULL);
+	philo->start_time_ms = time_to_ms(start_time_each);
+	my_sleep(philo->args->time_to_eat * 1000);
+	sem_post(philo->eating);
+	philo->counter += 1;
+	sem_post(philo->args->forks);
+	philo->count_forks -= 1;
+	sem_post(philo->args->forks);
+	philo->count_forks -= 1;
+}
+
+void	routine(t_philo *philo)
+{
+	struct timeval	start_time_each;
+	pthread_t		sv;
+	char			*name;
 
 	name = generate_sem_name(philo);
 	sem_unlink(name);
@@ -64,24 +87,10 @@ void routine(t_philo *philo)
 	pthread_create(&sv, NULL, (void *)supervisord, philo);
 	while (1)
 	{
-		sem_wait(philo->args->forks);
-		philo->count_forks += 1;
-		write_status(philo->id, "has taken a fork", philo, 0);
-		sem_wait(philo->args->forks);
-		philo->count_forks += 1;
-		write_status(philo->id, "has taken a fork", philo, 0);
-		sem_wait(philo->eating);
-		write_status(philo->id, "is eating", philo, 0);
-		gettimeofday(&start_time_each, NULL);
-		philo->start_time_ms = time_to_ms(start_time_each);
-		my_sleep(philo->args->time_to_eat * 1000);
-		sem_post(philo->eating);
-		philo->counter += 1;
-		sem_post(philo->args->forks);
-		philo->count_forks -= 1;
-		sem_post(philo->args->forks);
-		philo->count_forks -= 1;
-		if (philo->args->number_of_times_each_philosopher_must_eat > 0 && philo->counter >= philo->args->number_of_times_each_philosopher_must_eat)
+		help_routine(philo);
+		if (philo->args->number_of_times_each_philosopher_must_eat > 0 \
+		&& philo->counter >= \
+		philo->args->number_of_times_each_philosopher_must_eat)
 			exit (1);
 		write_status(philo->id, "is sleeping", philo, 0);
 		my_sleep(philo->args->time_to_sleep * 1000);
